@@ -1,0 +1,169 @@
+@startuml InsightIQ_Class_Diagram
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FFFFFF
+skinparam classBorderColor #6366F1
+skinparam arrowColor #6366F1
+skinparam packageBackgroundColor #E0E7FF
+skinparam padding 2
+skinparam nodesep 30
+skinparam ranksep 40
+
+title InsightIQ - Class Diagram 
+
+' ========== CORE APPLICATION ==========
+class App {
+    +session_state
+    +render_navigation()
+    +main()
+}
+
+class Config {
+    +DB_CONFIG
+    +APP_CONFIG
+    +ML_CONFIG
+}
+
+' ========== DATA LAYER ==========
+package "Data Models" {
+    class User {
+        +username
+        +email
+        +role
+    }
+
+    class RawData {
+        +date
+        +product, region
+        +sales, cost, profit
+        +batch_id
+    }
+
+    class CleanedData {
+        +date, product, region
+        +sales, cost, profit
+        +profit_margin, roi
+        +year, month, quarter
+    }
+
+    class KPI {
+        +total_sales, total_profit
+        +growth_rate
+        +health_score
+    }
+
+    class Prediction {
+        +prediction_date
+        +predicted_sales
+        +confidence_interval
+    }
+
+    class Insight {
+        +insight_type
+        +category, title
+        +impact, severity
+    }
+
+    class Recommendation {
+        +priority, category
+        +title, description
+        +estimated_impact
+    }
+
+    class Anomaly {
+        +detection_date
+        +anomaly_type
+        +severity
+    }
+}
+
+' ========== BUSINESS LOGIC ==========
+package "Analytics" {
+    class KPICalculator {
+        +calculate_all_kpis()
+        +calculate_health_score()
+    }
+
+    class EDA {
+        +analyze_temporal_trends()
+        +analyze_performance()
+    }
+
+    class RecommendationEngine {
+        +generate_recommendations()
+    }
+
+    class SWOTAnalysis {
+        +generate_swot_summary()
+    }
+}
+
+package "ML Models" {
+    class Forecasting {
+        +forecast_with_prophet()
+        +forecast_with_arima()
+    }
+
+    class AnomalyDetection {
+        +detect_anomalies()
+        +detect_sudden_drops()
+    }
+
+    class ScenarioAnalysis {
+        +simulate_scenarios()
+    }
+}
+
+' ========== UTILITIES ==========
+package "Utils" {
+    class DataProcessor {
+        +validate_data()
+        +clean_data()
+        +engineer_features()
+    }
+
+    class Auth {
+        +login_user()
+        +register_user()
+    }
+
+    class DBUtils {
+        +save_data()
+        +get_data()
+    }
+}
+
+package "UI" {
+    class Components {
+        +render_charts()
+        +render_metrics()
+    }
+}
+
+' ========== KEY RELATIONSHIPS ==========
+App --> Config
+App --> Auth
+App --> Components
+App --> DataProcessor
+
+DataProcessor --> RawData
+DataProcessor --> CleanedData
+RawData ..> CleanedData
+
+KPICalculator --> CleanedData
+KPICalculator --> KPI
+
+EDA --> CleanedData
+RecommendationEngine --> Recommendation
+SWOTAnalysis --> Insight
+
+Forecasting --> Prediction
+AnomalyDetection --> Anomaly
+
+DBUtils --> RawData
+DBUtils --> CleanedData
+DBUtils --> KPI
+
+Auth --> User
+
+@enduml

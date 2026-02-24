@@ -1,0 +1,98 @@
+╔══════════════════════════════════════════════════════════════╗
+║                    🔐 ADMIN ACCESS CARD                      ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║  👨‍💼 ADMIN CREDENTIALS                                         ║
+║  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  ║
+║                                                              ║
+║  Email:     aftabshah2309@gmail.com                         ║
+║  Password:  admin2309                                       ║
+║                                                              ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║  🎯 QUICK ACCESS                                             ║
+║  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  ║
+║                                                              ║
+║  1. Open app → Click "Login"                                ║
+║  2. Enter admin email and password                          ║
+║  3. Click "Login"                                           ║
+║  4. Select "Admin Dashboard" from sidebar                   ║
+║                                                              ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║  📊 WHAT YOU CAN SEE                                         ║
+║  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  ║
+║                                                              ║
+║  ✅ Total companies registered                               ║
+║  ✅ Active user count                                        ║
+║  ✅ Data upload statistics                                   ║
+║  ✅ All company details (names, emails, roles)              ║
+║  ✅ Registration dates and login history                    ║
+║  ✅ Usage analytics and charts                              ║
+║  ✅ Download company data as CSV                            ║
+║                                                              ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║  🛡️ ADMIN PRIVILEGES                                         ║
+║  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  ║
+║                                                              ║
+║  • View all registered companies                            ║
+║  • Monitor system usage                                     ║
+║  • Track user activity                                      ║
+║  • Export company data                                      ║
+║  • View analytics dashboard                                 ║
+║  • Access system statistics                                 ║
+║                                                              ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║  ⚠️ IMPORTANT NOTES                                          ║
+║  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  ║
+║                                                              ║
+║  • Admin cannot upload/analyze data                         ║
+║  • Admin sees different menu than regular users             ║
+║  • Login with EMAIL (not username)                          ║
+║  • Dashboard updates in real-time                           ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════
+                      📈 DASHBOARD METRICS
+═══════════════════════════════════════════════════════════════
+
+┌─────────────────────┬─────────────────────┬─────────────────┐
+│  Total Companies    │   Active Users      │  Data Uploads   │
+│  (All registered)   │  (Currently active) │  (Total batches)│
+└─────────────────────┴─────────────────────┴─────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│  Recent Activity Tracking:                                  │
+│  • New Registrations (Last 30 Days)                         │
+│  • Active Logins (Last 7 Days)                              │
+└─────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════
+                    📋 THREE MAIN SECTIONS
+═══════════════════════════════════════════════════════════════
+
+1️⃣  ALL COMPANIES TAB
+   • Complete list of all users
+   • Company details and contacts
+   • Account status and dates
+   • Download CSV option
+
+2️⃣  USAGE ANALYTICS TAB
+   • Data upload statistics
+   • Records per batch
+   • Upload timestamps
+   • Summary metrics
+
+3️⃣  CHARTS TAB
+   • Role distribution (Pie chart)
+   • Active/Inactive status (Bar chart)
+   • Registration timeline (Line graph)
+
+═══════════════════════════════════════════════════════════════
+
+💡 TIP: Bookmark this page for quick admin access reference!
+
+═══════════════════════════════════════════════════════════════

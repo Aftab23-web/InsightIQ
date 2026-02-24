@@ -1,0 +1,1 @@
+cd 'F:\PROJECT''S\MY_PR' ; .\.venv\Scripts\python.exe -m streamlit run app.py

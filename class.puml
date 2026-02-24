@@ -1,0 +1,50 @@
+@startuml InsightIQ Use Case Diagram
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "End User" as user
+actor "Admin" as admin
+actor "Data Analyst" as analyst
+
+
+rectangle "InsightIQ System" {
+  usecase "Login/Authentication" as UC1
+  usecase "View Dashboard" as UC2
+  usecase "Generate Reports" as UC3
+  usecase "Analyze Data" as UC4
+  usecase "Export Data" as UC5
+  usecase "Configure Settings" as UC6
+  usecase "Manage Users" as UC7
+  usecase "Upload Data" as UC8
+  usecase "Create Visualizations" as UC9
+  usecase "Schedule Reports" as UC10
+  usecase "Set Alerts" as UC11
+  usecase "Monitor System" as UC13
+}
+
+user --> UC1
+user --> UC2
+user --> UC3
+user --> UC5
+user --> UC9
+
+analyst --> UC1
+analyst --> UC2
+analyst --> UC4
+analyst --> UC3
+analyst --> UC8
+analyst --> UC9
+analyst --> UC10
+
+admin --> UC1
+admin --> UC6
+admin --> UC7
+admin --> UC13
+
+
+UC3 ..> UC4 : <<include>>
+UC10 ..> UC3 : <<include>>
+UC2 ..> UC1 : <<require>>
+
+@enduml
