@@ -672,6 +672,209 @@ def generate_growth_recommendations(df, kpis):
     return recommendations
 
 
+def generate_forecast_recovery_recommendations(df, forecast_df, metric_name, risk_assessment):
+    """
+    Generate actionable recommendations to overcome predicted losses in forecasts
+    based on historical company data patterns
+    """
+    recommendations = []
+    
+    # Analyze forecast trend
+    trend_change = risk_assessment.get('trend_change_pct', 0)
+    avg_uncertainty = risk_assessment.get('avg_uncertainty', 0)
+    risk_level = risk_assessment.get('risk_level', 'Medium')
+    
+    # Determine if we have a declining forecast
+    is_declining = trend_change < -5
+    is_severe_decline = trend_change < -15
+    
+    # Analyze historical data for recovery opportunities
+    total_sales = df['Sales'].sum()
+    total_profit = df['Profit'].sum()
+    total_cost = df['Cost'].sum()
+    avg_margin = (total_profit / total_sales * 100) if total_sales > 0 else 0
+    cost_ratio = (total_cost / total_sales) if total_sales > 0 else 0
+    
+    # Calculate recovery potential
+    predicted_value = forecast_df.iloc[0].get('predicted_sales', forecast_df.iloc[0].get('predicted_profit', 0))
+    
+    if is_declining or is_severe_decline:
+        # RECOMMENDATION 1: Address declining trend with multi-pronged approach
+        priority = 'Critical' if is_severe_decline else 'High'
+        
+        # Identify top performing products/regions for scaling
+        top_products = df.groupby('Product').agg({
+            'Sales': 'sum',
+            'Profit': 'sum',
+            'Profit_Margin': 'mean'
+        }).sort_values('Profit', ascending=False)
+        
+        best_product = top_products.index[0]
+        best_product_profit = top_products.iloc[0]['Profit']
+        best_product_margin = top_products.iloc[0]['Profit_Margin']
+        
+        # Regional analysis
+        if 'Region' in df.columns:
+            regional_perf = df.groupby('Region')['Sales'].sum().sort_values(ascending=False)
+            top_region = regional_perf.index[0]
+            region_sales = regional_perf.iloc[0]
+        else:
+            top_region = None
+        
+        # Calculate specific recovery targets
+        recovery_needed = abs(trend_change) / 100 * predicted_value
+        
+        action_items = [
+            f"**IMMEDIATE:** Scale up {best_product} (currently {best_product_margin:.1f}% margin) - could add ₹{best_product_profit * 0.2:,.0f} if increased 20%",
+            f"**URGENT:** Reduce costs from {cost_ratio*100:.1f}% to 65% - would save ₹{total_sales * (cost_ratio - 0.65):,.0f} annually"
+        ]
+        
+        if top_region:
+            action_items.append(f"**EXPAND:** Replicate {top_region} strategy (₹{region_sales:,.0f} sales) to underperforming regions")
+        
+        # Add product-specific recovery actions
+        low_performers = top_products[top_products['Profit'] < 0]
+        if len(low_performers) > 0:
+            loss_amount = abs(low_performers['Profit'].sum())
+            action_items.append(f"**OPTIMIZE:** Fix or discontinue {len(low_performers)} loss-making products - recover ₹{loss_amount:,.0f}")
+        
+        # Marketing and pricing actions
+        action_items.extend([
+            f"**PRICING:** Test 5-10% price increase on top 3 products - potential ₹{top_products.head(3)['Sales'].sum() * 0.075:,.0f} gain",
+            f"**MARKETING:** Launch targeted campaigns in Q1-Q2 (historically strongest periods)",
+            f"**RETENTION:** Implement customer retention program - reducing churn by 10% adds ₹{total_sales * 0.10:,.0f}"
+        ])
+        
+        recommendations.append({
+            'priority': priority,
+            'category': 'Forecast Recovery',
+            'title': f'Reverse {abs(trend_change):.1f}% Predicted Decline in {metric_name}',
+            'description': f"Forecast shows {abs(trend_change):.1f}% decline ({risk_level} risk). Based on your data, {best_product} and cost optimization are your fastest paths to recovery.",
+            'action_items': action_items,
+            'estimated_impact': f"Combined actions could recover ₹{recovery_needed:,.0f}+ and reverse the downward trend",
+            'implementation_effort': 'Moderate - requires coordination across sales, operations, and marketing',
+            'timeline': '60-90 days for measurable results',
+            'success_metrics': [
+                f'Achieve {abs(trend_change/2):.1f}% improvement within 2 months',
+                f'Reduce cost ratio to 65% or below',
+                f'Increase {best_product} sales by 15-20%',
+                'Return to positive growth trajectory by Q2'
+            ]
+        })
+        
+        # RECOMMENDATION 2: Product Portfolio Optimization
+        if len(low_performers) > 0 or len(top_products) > 3:
+            product_action_items = []
+            
+            # Top performers to scale
+            for i, (product, data) in enumerate(top_products.head(3).iterrows()):
+                product_action_items.append(
+                    f"**SCALE:** {product} - invest ₹{data['Sales'] * 0.1:,.0f} to capture 15% more market share"
+                )
+            
+            # Underperformers to fix
+            bottom_products = top_products[top_products['Profit_Margin'] < 20].sort_values('Sales', ascending=False)
+            if len(bottom_products) > 0:
+                for product, data in bottom_products.head(2).iterrows():
+                    if data['Profit'] > 0:
+                        product_action_items.append(
+                            f"**IMPROVE:** {product} margin from {data['Profit_Margin']:.1f}% to 25%+ through cost reduction"
+                        )
+            
+            # Loss makers to eliminate
+            if len(low_performers) > 0:
+                worst_product = low_performers.iloc[0]
+                product_action_items.append(
+                    f"**DISCONTINUE:** {worst_product.name} (losing ₹{abs(worst_product['Profit']):,.0f}) - reallocate resources"
+                )
+            
+            total_recovery = best_product_profit * 0.2 + abs(low_performers['Profit'].sum()) if len(low_performers) > 0 else best_product_profit * 0.2
+            
+            recommendations.append({
+                'priority': 'High',
+                'category': 'Product Strategy',
+                'title': 'Optimize Product Portfolio to Counter Forecast Decline',
+                'description': f"Focus resources on proven winners ({top_products.head(3).index.tolist()}) while eliminating drag from underperformers",
+                'action_items': product_action_items,
+                'estimated_impact': f"₹{total_recovery:,.0f} profit improvement through portfolio optimization",
+                'implementation_effort': 'Easy to Moderate',
+                'timeline': '30-60 days'
+            })
+    
+    # RECOMMENDATION 3: Risk Mitigation (for high uncertainty)
+    if avg_uncertainty > 20:
+        risk_actions = [
+            f"**DIVERSIFY:** Reduce dependency on single products/regions - current concentration creates {avg_uncertainty:.1f}% uncertainty",
+            f"**HEDGE:** Build {avg_uncertainty/2:.0f}% cash reserve to buffer against volatility",
+            "**MONITOR:** Implement weekly KPI tracking (sales, costs, margins) for early warning",
+            "**AGILITY:** Create contingency plans for best/worst case scenarios"
+        ]
+        
+        # Add specific diversification opportunities
+        if 'Region' in df.columns:
+            regional_concentration = df.groupby('Region')['Sales'].sum()
+            top_region_pct = (regional_concentration.max() / regional_concentration.sum() * 100)
+            if top_region_pct > 40:
+                risk_actions.append(f"**EXPAND:** {regional_concentration.idxmax()} represents {top_region_pct:.0f}% of sales - expand to other regions")
+        
+        recommendations.append({
+            'priority': 'High',
+            'category': 'Risk Management',
+            'title': f'Reduce Forecast Uncertainty from {avg_uncertainty:.1f}%',
+            'description': f"High uncertainty ({avg_uncertainty:.1f}%) indicates need for diversification and risk management",
+            'action_items': risk_actions,
+            'estimated_impact': "Improved predictability and resilience to market changes",
+            'implementation_effort': 'Moderate',
+            'timeline': '90 days for measurable uncertainty reduction'
+        })
+    
+    # RECOMMENDATION 4: Cost Efficiency for Margin Protection
+    if cost_ratio > 0.70:
+        cost_savings_potential = total_sales * (cost_ratio - 0.65)
+        
+        # Identify high-cost areas
+        product_costs = df.groupby('Product').agg({
+            'Cost': 'sum',
+            'Sales': 'sum'
+        })
+        product_costs['Cost_Ratio'] = product_costs['Cost'] / product_costs['Sales']
+        high_cost_products = product_costs[product_costs['Cost_Ratio'] > 0.75].sort_values('Cost', ascending=False)
+        
+        cost_actions = [
+            f"**TARGET:** Reduce overall cost ratio from {cost_ratio*100:.1f}% to 65% over 90 days",
+            f"**NEGOTIATE:** Renegotiate supplier contracts - target 8-12% cost reduction (₹{total_cost * 0.1:,.0f})"
+        ]
+        
+        if len(high_cost_products) > 0:
+            for product, data in high_cost_products.head(2).iterrows():
+                cost_actions.append(
+                    f"**FIX:** {product} has {data['Cost_Ratio']*100:.0f}% cost ratio - find alternative suppliers or adjust pricing"
+                )
+        
+        cost_actions.extend([
+            "**AUTOMATE:** Identify manual processes for automation - reduce labor costs 10-15%",
+            f"**TRACK:** Implement daily cost monitoring dashboard for all major expense categories"
+        ])
+        
+        recommendations.append({
+            'priority': 'Critical' if cost_ratio > 0.75 else 'High',
+            'category': 'Cost Optimization',
+            'title': f'Urgent Cost Reduction to Protect Margins Against Decline',
+            'description': f"With {metric_name} forecasted to decline, reducing costs from {cost_ratio*100:.1f}% to 65% is critical for survival",
+            'action_items': cost_actions,
+            'estimated_impact': f"₹{cost_savings_potential:,.0f} annual savings - converts directly to profit",
+            'implementation_effort': 'Moderate',
+            'timeline': '90 days',
+            'success_metrics': [
+                'Achieve 65% cost ratio within 3 months',
+                f'Save ₹{cost_savings_potential/12:,.0f} per month',
+                'Improve gross margin by 5-10 percentage points'
+            ]
+        })
+    
+    return recommendations
+
+
 def generate_all_recommendations(df, mistakes, kpis, swot):
     """
     Generate comprehensive prioritized recommendations

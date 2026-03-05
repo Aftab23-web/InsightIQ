@@ -95,4 +95,5 @@ def render():
         with col_y:
             if st.button(" Register Here", width='stretch'):
                 st.session_state.show_register = True
+                st.session_state.show_login = False
                 st.rerun()

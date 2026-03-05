@@ -4,6 +4,7 @@ Forecasting Page
 import streamlit as st
 from ml_models.forecasting import forecast_multiple_metrics, assess_forecast_risk
 from ml_models.scenario_analysis import run_scenario_analysis, run_custom_scenarios
+from analytics.recommendation_engine import generate_forecast_recovery_recommendations
 from ui import render_alert, create_line_chart
 from utils.auth import is_logged_in
 import pandas as pd
@@ -165,6 +166,90 @@ def render():
                     with col3:
                         trend_icon = "📉" if risk['trend_change_pct'] < 0 else "📈"
                         st.metric("Trend Change", f"{trend_icon} {risk['trend_change_pct']:.1f}%")
+                    
+                    # Generate recovery recommendations if forecast shows decline or high risk
+                    if risk['trend_change_pct'] < -5 or risk['risk_level'] in ['High', 'Critical']:
+                        st.markdown("<br>", unsafe_allow_html=True)
+                        st.markdown("### 🎯 How to Overcome This Decline")
+                        st.markdown("""
+                            <div style="background: rgba(234, 179, 8, 0.1); padding: 15px; border-radius: 8px; border-left: 4px solid #eab308; margin-bottom: 20px;">
+                                <p style="color: white; margin: 0;">
+                                    <strong>⚡ AI-Powered Recovery Plan:</strong> Based on your company's data, 
+                                    here are specific actions to reverse the predicted decline:
+                                </p>
+                            </div>
+                        """, unsafe_allow_html=True)
+                        
+                        # Generate recommendations
+                        recovery_recs = generate_forecast_recovery_recommendations(df, forecast_df, metric, risk)
+                        
+                        for idx, rec in enumerate(recovery_recs):
+                            # Color code by priority
+                            if rec['priority'] == 'Critical':
+                                border_color = '#ef4444'
+                                icon = '🚨'
+                            elif rec['priority'] == 'High':
+                                border_color = '#f59e0b'
+                                icon = '⚠️'
+                            else:
+                                border_color = '#3b82f6'
+                                icon = '📋'
+                            
+                            with st.expander(f"{icon} **{rec['priority']}:** {rec['title']}", expanded=(idx == 0)):
+                                st.markdown(f"**{rec['description']}**")
+                                st.markdown("<br>", unsafe_allow_html=True)
+                                
+                                # Action items
+                                st.markdown("**📌 Action Plan:**")
+                                for action in rec['action_items']:
+                                    st.markdown(f"- {action}")
+                                
+                                st.markdown("<br>", unsafe_allow_html=True)
+                                
+                                # Impact and effort
+                                col_a, col_b = st.columns(2)
+                                with col_a:
+                                    st.markdown(f"**💰 Estimated Impact:**  \n{rec['estimated_impact']}")
+                                    if 'timeline' in rec:
+                                        st.markdown(f"**⏱️ Timeline:**  \n{rec['timeline']}")
+                                with col_b:
+                                    st.markdown(f"**🔧 Effort Required:**  \n{rec['implementation_effort']}")
+                                    if 'success_metrics' in rec:
+                                        st.markdown("**✅ Success Metrics:**")
+                                        for metric_item in rec['success_metrics']:
+                                            st.markdown(f"  - {metric_item}")
+                        
+                        st.markdown("""
+                            <div style="background: rgba(16, 185, 129, 0.1); padding: 15px; border-radius: 8px; border-left: 4px solid #10b981; margin-top: 20px;">
+                                <p style="color: white; margin: 0;">
+                                    <strong>💡 Pro Tip:</strong> Start with the top priority recommendation. 
+                                    Implement 2-3 actions from the Critical/High priority items within the next 30 days for maximum impact.
+                                </p>
+                            </div>
+                        """, unsafe_allow_html=True)
+                    
+                    elif risk['trend_change_pct'] > 10:
+                        # Positive forecast - show growth optimization recommendations
+                        st.markdown("<br>", unsafe_allow_html=True)
+                        st.markdown("""
+                            <div style="background: rgba(16, 185, 129, 0.1); padding: 15px; border-radius: 8px; border-left: 4px solid #10b981; margin-bottom: 20px;">
+                                <p style="color: white; margin: 0;">
+                                    <strong>✅ Strong Growth Predicted!</strong> Consider these strategies to maximize the opportunity:
+                                </p>
+                            </div>
+                        """, unsafe_allow_html=True)
+                        
+                        growth_tips = [
+                            "**Scale Up:** Increase inventory and production capacity to meet projected demand",
+                            "**Invest in Marketing:** With positive momentum, additional marketing spend can accelerate growth",
+                            "**Expand Team:** Hire ahead of demand to ensure service quality during growth",
+                            "**Lock in Suppliers:** Secure favorable long-term contracts while you have negotiating power"
+                        ]
+                        
+                        for tip in growth_tips:
+                            st.markdown(f"- {tip}")
+                    
+                    st.markdown("<br>", unsafe_allow_html=True)
                     
                     # Format and display detailed forecast table
                     st.markdown("###  Monthly Forecast Details")
