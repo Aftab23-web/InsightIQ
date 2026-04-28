@@ -2,6 +2,37 @@
 
 A comprehensive, enterprise-grade AI-powered business analytics platform built with Python, Streamlit, and PostgreSQL. This platform transforms raw business data into actionable insights with automated analysis, forecasting, and strategic recommendations.
 
+## 🚀 **KEY DIFFERENTIATOR: Loss Forecasting & Automated Recovery Plans**
+
+**Unlike traditional BI tools that just show what happened, InsightIQ predicts what WILL happen and tells you exactly how to fix it.**
+
+### How It Works:
+1. **📈 AI Forecasts 12 Months Ahead** - Using Facebook Prophet and ARIMA
+2. **🔍 Detects Predicted Losses** - Identifies declining trends before they hit
+3. **🎯 Generates Recovery Plans** - Specific, data-driven action items based on YOUR company data
+4. **💰 Quantifies Impact** - Shows exact ₹ amounts for each recommendation
+5. **⏱️ Provides Timeline** - 60-90 day roadmaps with success metrics
+
+**Example Output:**
+```
+🚨 ALERT: Sales forecasted to drop 18% in next 6 months
+
+AI Recovery Plan (Based on Your Data):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Scale up "Product A" → Add ₹2.4L revenue
+✅ Reduce costs from 72% to 65% → Save ₹5.6L
+✅ Replicate "North Region" strategy → Gain ₹3.2L
+✅ Discontinue 2 loss-makers → Recover ₹1.2L
+
+💰 Total Recovery Potential: ₹12.4L+
+⏱️ Timeline: 60-90 days
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**See [POWERFUL_FEATURES.md](POWERFUL_FEATURES.md) for complete feature showcase.**
+
+---
+
 ## ✨ Features
 
 ### 📊 Core Analytics

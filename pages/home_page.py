@@ -315,6 +315,24 @@ def render():
                 </ul>
             </div>
         """, unsafe_allow_html=True)
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        st.markdown("""
+            <div class="feature-card metric-card" style="min-height: 200px;">
+                <div class="floating-icon" style="font-size: 3rem; text-align: center;"></div>
+                <h3 style="color: white; text-align: center;">Forecasting Analysis</h3>
+                <p style="color: rgba(255,255,255,0.85); text-align: center;">
+                    Can predict future trends with confidence intervals using Prophet & XGBoost
+                </p>
+                <ul style="color: rgba(255,255,255,0.75); font-size: 0.9rem;">
+                    <li>Sales predictions</li>
+                    <li>Profit predictions</li>
+                    <li>Impact modeling</li>
+                </ul>
+            </div>
+        """, unsafe_allow_html=True)
+        
     
     st.markdown("<br><br>", unsafe_allow_html=True)
     
