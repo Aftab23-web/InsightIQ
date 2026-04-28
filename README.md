@@ -1,31 +1,31 @@
-# 🎯 InsightIQ
+#  InsightIQ
 
 A comprehensive, enterprise-grade AI-powered business analytics platform built with Python, Streamlit, and PostgreSQL. This platform transforms raw business data into actionable insights with automated analysis, forecasting, and strategic recommendations.
 
-## 🚀 **KEY DIFFERENTIATOR: Loss Forecasting & Automated Recovery Plans**
+##  **KEY DIFFERENTIATOR: Loss Forecasting & Automated Recovery Plans**
 
 **Unlike traditional BI tools that just show what happened, InsightIQ predicts what WILL happen and tells you exactly how to fix it.**
 
 ### How It Works:
-1. **📈 AI Forecasts 12 Months Ahead** - Using Facebook Prophet and ARIMA
-2. **🔍 Detects Predicted Losses** - Identifies declining trends before they hit
-3. **🎯 Generates Recovery Plans** - Specific, data-driven action items based on YOUR company data
-4. **💰 Quantifies Impact** - Shows exact ₹ amounts for each recommendation
-5. **⏱️ Provides Timeline** - 60-90 day roadmaps with success metrics
+1. ** AI Forecasts 12 Months Ahead** - Using Facebook Prophet and ARIMA
+2. ** Detects Predicted Losses** - Identifies declining trends before they hit
+3. ** Generates Recovery Plans** - Specific, data-driven action items based on YOUR company data
+4. ** Quantifies Impact** - Shows exact ₹ amounts for each recommendation
+5. ** Provides Timeline** - 60-90 day roadmaps with success metrics
 
 **Example Output:**
 ```
-🚨 ALERT: Sales forecasted to drop 18% in next 6 months
+ ALERT: Sales forecasted to drop 18% in next 6 months
 
 AI Recovery Plan (Based on Your Data):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ Scale up "Product A" → Add ₹2.4L revenue
-✅ Reduce costs from 72% to 65% → Save ₹5.6L
-✅ Replicate "North Region" strategy → Gain ₹3.2L
-✅ Discontinue 2 loss-makers → Recover ₹1.2L
+ Scale up "Product A" → Add ₹2.4L revenue
+ Reduce costs from 72% to 65% → Save ₹5.6L
+ Replicate "North Region" strategy → Gain ₹3.2L
+ Discontinue 2 loss-makers → Recover ₹1.2L
 
-💰 Total Recovery Potential: ₹12.4L+
-⏱️ Timeline: 60-90 days
+ Total Recovery Potential: ₹12.4L+
+ Timeline: 60-90 days
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -33,40 +33,40 @@ AI Recovery Plan (Based on Your Data):
 
 ---
 
-## ✨ Features
+##  Features
 
-### 📊 Core Analytics
+###  Core Analytics
 - **Exploratory Data Analysis (EDA)**: Year-wise, month-wise, product-wise, and regional performance analysis
 - **Business Mistake Detection**: Automatically identify loss-making products, underperforming regions, and inefficiencies
 - **Root Cause Analysis**: AI-powered WHY engine using correlation analysis, feature importance, and SHAP explanations
 - **SWOT Analysis**: Data-driven strengths, weaknesses, opportunities, and threats identification
 
-### 🎯 Intelligence & Insights
+### Intelligence & Insights
 - **Business Health Score**: 0-100 score based on growth, profitability, efficiency, and stability
 - **KPI Dashboard**: Track revenue, growth, efficiency, and stability metrics
 - **Anomaly Detection**: Identify sudden drops, cost spikes, and unusual patterns
 - **Risk Assessment**: Evaluate business risks and forecast uncertainties
 
-### 🔮 Predictive Analytics
+###  Predictive Analytics
 - **Sales & Profit Forecasting**: 6-12 month predictions using Prophet and ARIMA
 - **Confidence Intervals**: Prediction ranges with 95% confidence
 - **What-If Analysis**: Simulate marketing changes, cost reductions, price adjustments, and product removals
 - **Scenario Comparison**: Ranked scenarios by profit impact
 
-### 💡 Recommendation Engine
+###  Recommendation Engine
 - **Prioritized Recommendations**: Critical, High, Medium, and Low priority actions
 - **Impact Estimation**: Quantified business impact for each recommendation
 - **Implementation Guidance**: Action items and effort estimates
 - **Multi-Category**: Cost optimization, product strategy, regional strategy, marketing, and growth
 
-### 🎨 Modern UI/UX
+###  Modern UI/UX
 - **SaaS-Style Interface**: Premium, animated dashboard with gradient backgrounds
 - **Interactive Charts**: Plotly-powered visualizations with hover interactions
 - **Lottie Animations**: Loading states and success indicators
 - **Card-Based Layout**: Clean, organized information presentation
 - **Responsive Design**: Optimized for all screen sizes
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Backend
 - **Python 3.9+**: Core programming language
@@ -86,7 +86,7 @@ AI Recovery Plan (Based on Your Data):
 - **streamlit-option-menu**: Enhanced navigation
 - **streamlit-lottie**: Animations
 
-## 📦 Installation
+##  Installation
 
 ### Prerequisites
 - Python 3.9 or higher
@@ -168,7 +168,7 @@ Alternatively, run the SQL schema manually:
 psql -U your_username -d business_analytics -f database/schema.sql
 ```
 
-## 🚀 Running the Application
+##  Running the Application
 
 ### Start the Streamlit App
 
@@ -184,82 +184,8 @@ The application will open in your browser at `http://localhost:8501`
 streamlit run app.py --server.port 8080
 ```
 
-## 📁 Project Structure
 
-```
-MY_PR/
-├── app.py                          # Main application entry point
-├── config.py                       # Configuration management
-├── requirements.txt                # Python dependencies
-├── .env.example                    # Environment template
-├── .gitignore                      # Git ignore rules
-│
-├── database/                       # Database layer
-│   ├── __init__.py
-│   ├── models.py                   # SQLAlchemy models
-│   ├── db_utils.py                 # Database utilities
-│   └── schema.sql                  # PostgreSQL schema
-│
-├── utils/                          # Utility modules
-│   ├── __init__.py
-│   └── data_processor.py           # Data cleaning & validation
-│
-├── analytics/                      # Analytics engines
-│   ├── __init__.py
-│   ├── eda.py                      # Exploratory analysis
-│   ├── mistake_detection.py       # Business mistake detection
-│   ├── root_cause.py               # Root cause analysis
-│   ├── swot_analysis.py            # SWOT analysis
-│   ├── kpi_calculator.py           # KPI calculation
-│   └── recommendation_engine.py    # Recommendation system
-│
-├── ml_models/                      # Machine learning models
-│   ├── __init__.py
-│   ├── forecasting.py              # Time series forecasting
-│   ├── anomaly_detection.py        # Anomaly detection
-│   └── scenario_analysis.py        # What-if scenarios
-│
-├── ui/                             # UI components
-│   ├── __init__.py
-│   ├── styles.py                   # Custom CSS
-│   └── components.py               # Reusable UI components
-│
-└── pages/                          # Application pages
-    ├── __init__.py
-    ├── home_page.py
-    ├── data_upload_page.py
-    ├── executive_dashboard_page.py
-    ├── analytics_page.py
-    ├── insights_page.py
-    ├── forecasting_page.py
-    ├── recommendations_page.py
-    └── reports_page.py
-```
-
-## 📊 Data Format
-
-Your CSV file must contain these columns:
-
-| Column | Type | Description | Example |
-|--------|------|-------------|---------|
-| Date | Date | Transaction date | 2024-01-01 |
-| Product | String | Product name | Widget A |
-| Region | String | Geographic region | North |
-| Sales | Float | Sales amount | 10000.00 |
-| Cost | Float | Cost amount | 6000.00 |
-| Profit | Float | Profit amount | 4000.00 |
-| Marketing_Spend | Float | Marketing expenditure | 500.00 |
-
-### Sample Data 
-
-```csv
-Date,Product,Region,Sales,Cost,Profit,Marketing_Spend
-2024-01-01,Widget A,North,10000,6000,4000,500
-2024-01-02,Widget B,South,15000,9000,6000,750
-2024-01-03,Widget A,East,12000,7000,5000,600
-```
-
-## 🎯 Usage Guide
+##  Usage Guide
 
 ### 1. Upload Data
 - Navigate to "Data Upload" page
@@ -296,7 +222,7 @@ Date,Product,Region,Sales,Cost,Profit,Marketing_Spend
 - See estimated impact
 - Plan implementation
 
-## 🔧 Configuration
+##  Configuration
 
 ### Database Settings
 
@@ -341,7 +267,7 @@ KPI_THRESHOLDS = {
 }
 ```
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Database Connection Issues
 
@@ -368,7 +294,7 @@ pip install --upgrade -r requirements.txt
 streamlit run app.py --server.port 8502
 ```
 
-## 📈 Performance Optimization
+##  Performance Optimization
 
 ### For Large Datasets
 
@@ -387,7 +313,7 @@ CREATE INDEX idx_product_region ON cleaned_data(product, region);
 VACUUM ANALYZE;
 ```
 
-## 🚀 Deployment
+##  Deployment
 
 ### Streamlit Cloud
 
@@ -416,25 +342,7 @@ docker build -t business-intelligence .
 docker run -p 8501:8501 business-intelligence
 ```
 
-## 📝 License
+## License
 
 This project is provided as-is for educational and commercial use.
 
-## 🤝 Support
-
-For issues, questions, or contributions, please refer to the project documentation or create an issue in the repository.
-
-## 🎉 Features Roadmap
-
-- [ ] PDF Report Generation
-- [ ] Email Alerts for Critical Issues
-- [ ] Multi-user Authentication
-- [ ] Custom Dashboard Builder
-- [ ] Integration with External Data Sources
-- [ ] Mobile App
-- [ ] Advanced ML Models (XGBoost, Neural Networks)
-- [ ] Real-time Data Streaming
-
----
-
-**Built with ❤️ using Python, Streamlit, and PostgreSQL**
